@@ -50,7 +50,7 @@ export function genCompilerSfcLink(version: string) {
   );
 }
 
-export function genImportMap(versions: Versions): ImportMap {
+export function genImportMap(versions: Versions, iconsEnabled: boolean): ImportMap {
   const deps: Record<string, Dependency> = {
     'vue': {
       pkg: '@vue/runtime-dom',
@@ -68,12 +68,15 @@ export function genImportMap(versions: Versions): ImportMap {
       path: './antd.esm.js',
       // path: '/dist/antd.esm.js', // TODO: 待 antdv-next 组件库添加
     },
-    '@antdv-next/icons': {
+  };
+
+  if (iconsEnabled) {
+    deps['@antdv-next/icons'] = {
       pkg: '@antdv-next/icons',
       version: 'latest',
       path: './antdv-next-icons.es.js', // TODO: 待 antdv-next-icons 库添加
-    },
-  };
+    };
+  }
 
   return {
     imports: Object.fromEntries(
