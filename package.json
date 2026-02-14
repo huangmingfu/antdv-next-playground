@@ -1,0 +1,88 @@
+{
+  "name": "antdv-next-playground",
+  "type": "module",
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.29.3",
+  "description": "Antdv Next Playground 演练场",
+  "author": {
+    "name": "huangmingfu",
+    "email": "212149997@qq.com",
+    "url": "https://github.com/huangmingfu/antdv-next-playground"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/huangmingfu/antdv-next-playground",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/huangmingfu/antdv-next-playground"
+  },
+  "bugs": "https://github.com/huangmingfu/antdv-next-playground/issues",
+  "keywords": [
+    "vue",
+    "antdv-next",
+    "ant-design",
+    "antdv-next-playground",
+    "repl",
+    "playground"
+  ],
+  "scripts": {
+    "dev": "vite -m development",
+    "dev:test": "vite -m test",
+    "dev:pro": "vite -m production",
+    "build:dev": "pnpm vite build -m development",
+    "build:test": "pnpm vite build -m test",
+    "build:pro": "pnpm vite build -m production",
+    "preview:dev": "pnpm vite preview -m development",
+    "preview:test": "pnpm vite preview -m test",
+    "preview:pro": "pnpm vite preview -m production",
+    "typecheck": "vue-tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "lint:inspector": "npx @eslint/config-inspector",
+    "clean": "rm -rf node_modules dist dist-*",
+    "preinstall": "npx only-allow pnpm",
+    "postinstall": "npx simple-git-hooks"
+  },
+  "dependencies": {
+    "@antdv-next/icons": "^1.0.1",
+    "@vue/repl": "^4.7.1",
+    "@vueuse/core": "^14.2.1",
+    "antdv-next": "^1.0.2",
+    "semver": "^7.7.4",
+    "vue": "^3.5.28"
+  },
+  "devDependencies": {
+    "@antdv-next/auto-import-resolver": "^1.0.1",
+    "@antfu/eslint-config": "^7.4.3",
+    "@types/node": "^25.2.3",
+    "@types/semver": "^7.7.1",
+    "@unocss/eslint-config": "66.6.0",
+    "@vitejs/plugin-vue": "^6.0.4",
+    "@vitejs/plugin-vue-jsx": "^5.1.4",
+    "@vue/compiler-sfc": "^3.5.28",
+    "@vue/shared": "^3.5.28",
+    "@vue/tsconfig": "^0.8.1",
+    "eslint": "^10.0.0",
+    "eslint-plugin-format": "^1.4.0",
+    "lint-staged": "^16.2.7",
+    "sass": "^1.97.3",
+    "simple-git-hooks": "^2.13.1",
+    "typescript": "~5.9.3",
+    "unocss": "66.6.0",
+    "unplugin-vue-components": "^31.0.0",
+    "vite": "^7.3.1",
+    "vue-tsc": "^3.2.4"
+  },
+  "pnpm": {
+    "overrides": {
+      "esbuild": "^0.25.0",
+      "lodash": ">=4.17.23",
+      "tar": ">=7.5.4"
+    }
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
+  }
+}
