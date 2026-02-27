@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { SelectValue } from 'antdv-next';
-import type { Ref } from 'vue';
+import type { ComputedRef } from 'vue';
 import type { Store } from '@/composables';
 import type { VersionKey } from '@/utils/dependency';
 import { GithubFilled, ReloadOutlined, SettingOutlined, ShareAltOutlined } from '@antdv-next/icons';
-import { computed, reactive } from 'vue';
+import { computed, reactive, unref } from 'vue';
 import { cdn, getSupportedAntdVersions, getSupportedTSVersions, getSupportedVueVersions } from '@/utils/dependency';
 import { autoLabelOptions, copy } from '@/utils/tools';
 
@@ -18,7 +18,7 @@ const emit = defineEmits<{
 
 const iconsEnabled = computed({
   get: () => store.iconsEnabled,
-  set: val => store.setIconsEnabled(val),
+  set: val => store.setIconsEnabled(unref(val)),
 });
 
 const cdnOptions = [
@@ -53,7 +53,7 @@ const cdnOptions = [
   },
 ];
 
-const versions = reactive<Record<VersionKey, { text: string; active: string; published: Ref<string[]> }>>({
+const versions = reactive<Record<VersionKey, { text: string; active: string; published: ComputedRef<string[]> }>>({
   antdvNext: {
     text: 'Antdv Next',
     published: getSupportedAntdVersions(),
@@ -107,9 +107,9 @@ function refreshView() {
         :key="key"
         class="flex items-center gap-2 lt-lg-hidden"
       >
-        <span>{{ v.text === 'Antdv Next' ? 'Antdv Next（无效）' : v.text }}:</span>
+        <span>{{ v.text }}:</span>
         <a-select
-          v-model:value="v.active"
+          :value="v.active"
           :options="autoLabelOptions(v.published)"
           size="small"
           style="min-width: 180px"

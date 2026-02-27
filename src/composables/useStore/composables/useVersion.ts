@@ -16,7 +16,7 @@ export function useVersion({
 }) {
   async function setVueVersion(version: string) {
     store.compiler = await import(
-      genCompilerSfcLink(version),
+      /* @vite-ignore */ genCompilerSfcLink(version),
     );
     versions.vue = version;
   };

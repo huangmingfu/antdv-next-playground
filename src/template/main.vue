@@ -12,11 +12,10 @@ setupAntDesignVue();
     <App />
     <!-- 固定展示版本号 -->
     <p style="position: fixed; bottom: 0px;">
-      Antdv Next：<span style="color: #1890FF;">{{ antdVersion }}</span> （待组件库发布浏览器原生 ESM 产物后才可变更版本）
+      Antdv Next：<span style="color: #1890FF;">{{ antdVersion }}</span>
       <br/>
       Vue：<span style="color: #1890FF;">{{ vueVersion }}</span>
       <br/>
-    <!-- (暂不支持引入 @antdv-next/icons 图标库) -->
     </p>
   </div>
 </template>

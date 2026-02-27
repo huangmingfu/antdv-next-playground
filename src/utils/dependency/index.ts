@@ -19,9 +19,6 @@ export function genCdnLink(
   if (import.meta.env.VITE_NODE_ENV === 'development')
     return devDepsProxy[pkg] || '';
 
-  if (pkg === '@antdv-next/icons' || pkg === 'antdv-next')
-    return path;
-
   switch (cdn.value) {
     case 'jsdelivr':
       return `https://cdn.jsdelivr.net/npm/${pkg}@${version}${path}`;
@@ -65,8 +62,7 @@ export function genImportMap(versions: Versions, iconsEnabled: boolean): ImportM
     'antdv-next': {
       pkg: 'antdv-next',
       version: versions.antdvNext,
-      path: './antd.esm.js',
-      // path: '/dist/antd.esm.js', // TODO: 待 antdv-next 组件库添加
+      path: '/dist/antd.esm.js',
     },
   };
 
@@ -74,7 +70,7 @@ export function genImportMap(versions: Versions, iconsEnabled: boolean): ImportM
     deps['@antdv-next/icons'] = {
       pkg: '@antdv-next/icons',
       version: 'latest',
-      path: './antdv-next-icons.es.js', // TODO: 待 antdv-next-icons 库添加
+      path: '/dist/antd-icons.esm.js',
     };
   }
 
@@ -92,7 +88,7 @@ export function genAntdvStyleLink(version: string) {
   return genCdnLink(
     'antdv-next',
     version,
-    Number(version[0]) > 3 ? '/dist/reset.css' : '/dist/antd.css', // TODO: 待调整
+    '/dist/antd.css',
   );
 }
 
@@ -129,7 +125,7 @@ export function getSupportedTSVersions() {
 export function getSupportedAntdVersions() {
   const versions = getVersions('antdv-next');
   return computed(() => {
-    // 3.3.0 之前的 antdv 版本无浏览器原生 ESM 产物，需要过滤 TODO: 待调整
-    return versions.value.filter(version => version === '1.0.0' || (!/alpha|rc/.test(version)));
+    // 1.0.5 之前的 antdv-next 版本无浏览器原生 ESM 产物，需要过滤
+    return versions.value.filter(version => gte(version, '1.0.5'));
   });
 }
