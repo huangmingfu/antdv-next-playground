@@ -3,17 +3,19 @@ import type { SelectValue } from 'antdv-next';
 import type { ComputedRef } from 'vue';
 import type { Store } from '@/composables';
 import type { VersionKey } from '@/utils/dependency';
-import { GithubFilled, ReloadOutlined, SettingOutlined, ShareAltOutlined } from '@antdv-next/icons';
+import { CodeOutlined, GithubFilled, ReloadOutlined, SettingOutlined, ShareAltOutlined } from '@antdv-next/icons';
 import { computed, reactive, unref } from 'vue';
 import { cdn, getSupportedAntdVersions, getSupportedTSVersions, getSupportedVueVersions } from '@/utils/dependency';
 import { autoLabelOptions, copy } from '@/utils/tools';
 
 const { store } = defineProps<{
   store: Store;
+  showConsole?: boolean;
 }>();
 
 const emit = defineEmits<{
   (e: 'refresh'): void;
+  (e: 'toggleConsole'): void;
 }>();
 
 const iconsEnabled = computed({
@@ -78,11 +80,15 @@ async function setVersion(key: VersionKey, v: SelectValue) {
 }
 
 function copyLink() {
-  copy(location.href, '可共享URL已被复制到剪贴板。');
+  copy(location.href, '可共享 URL 已被复制到剪贴板。');
 }
 
 function refreshView() {
   emit('refresh');
+}
+
+function toggleConsole() {
+  emit('toggleConsole');
 }
 </script>
 
@@ -119,6 +125,13 @@ function refreshView() {
       <div class="flex gap-4 text-lg">
         <ReloadOutlined @click="refreshView" />
         <ShareAltOutlined @click="copyLink" />
+        <a-tooltip title="Toggle Console (Ctrl+`)">
+          <a-button :type="showConsole ? 'primary' : 'default'" size="small" @click="toggleConsole">
+            <template #icon>
+              <CodeOutlined />
+            </template>
+          </a-button>
+        </a-tooltip>
         <a
           href="https://github.com/huangmingfu/antdv-next-playground"
           target="_blank"
