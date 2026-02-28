@@ -32,7 +32,6 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       target: 'esnext',
-      outDir: env.VITE_OUT_DIR || 'dist',
       chunkSizeWarningLimit: 2000,
       rollupOptions: {
         output: {

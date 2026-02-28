@@ -4,6 +4,7 @@ import type { Cdn, Dependency, Versions } from './types';
 import { useFetch, useLocalStorage } from '@vueuse/core';
 import { gte } from 'semver';
 import { computed, unref } from 'vue';
+import { IS_DEV } from '@/composables/useStore/constants';
 import { devDepsProxy } from '@/proxy';
 
 export * from './types';
@@ -16,7 +17,7 @@ export function genCdnLink(
   path: string,
 ) {
   // 开发不使用公共 cdn，提升 deps 加载速度
-  if (import.meta.env.VITE_NODE_ENV === 'development')
+  if (IS_DEV)
     return devDepsProxy[pkg] || '';
 
   switch (cdn.value) {
