@@ -8,7 +8,6 @@ export function useUserOptions(store: ReplStore, saved?: SerializeState) {
     vueVersion: saved?._o?.vueVersion,
     tsVersion: saved?._o?.tsVersion,
     antdvVersion: saved?._o?.antdvVersion,
-    iconsEnabled: saved?._o?.iconsEnabled ?? false,
   };
   const hideFile = !IS_DEV && !userOptions.showHidden;
 

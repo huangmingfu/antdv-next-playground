@@ -14,21 +14,9 @@ export function deserialize(text: string): SerializeState {
   return state;
 }
 
-export function generateAntDesignVueCode(version: string, iconsEnabled: boolean) {
+export function generateAntDesignVueCode(version: string) {
   const style = genAntdvStyleLink(version);
-  let code = antDesignVueCode.replace('#STYLE#', style);
-
-  if (iconsEnabled) {
-    code = code.replace('/* #ICONS_IMPORT# */', 'import * as AntDNextIcons from "@antdv-next/icons";');
-    code = code.replace(
-      '/* #ICONS_REGISTER# */',
-      `Object.entries(AntDNextIcons).forEach(([name, comp]) => {
-    app.component(name, comp);
-  });`,
-    );
-  }
-
-  return code;
+  return antDesignVueCode.replace('#STYLE#', style);
 }
 
 export function initFiles(versions: Versions, saved?: SerializeState) {
@@ -53,7 +41,7 @@ export function initFiles(versions: Versions, saved?: SerializeState) {
   if (!files[ANTDV_FILE]) {
     files[ANTDV_FILE] = new File(
       ANTDV_FILE,
-      generateAntDesignVueCode(versions.antdvNext, saved?._o?.iconsEnabled ?? false),
+      generateAntDesignVueCode(versions.antdvNext),
     );
   }
   if (!files[TSCONFIG]) {

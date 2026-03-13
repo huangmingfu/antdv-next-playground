@@ -2,7 +2,7 @@ import type { ImportMap } from '@vue/repl';
 import type { Initial, SerializeState } from './types';
 import type { Versions } from '@/utils/dependency';
 import { compileFile, mergeImportMap, useStore as useReplStore } from '@vue/repl';
-import { computed, reactive, ref, toRefs, watch, watchEffect } from 'vue';
+import { computed, reactive, toRefs, watch, watchEffect } from 'vue';
 import mainCode from '@/template/main.vue?raw';
 import { genImportMap } from '@/utils/dependency';
 import { useUserOptions } from './composables/useUserOptions';
@@ -21,9 +21,7 @@ export function useStore(initial: Initial) {
     typescript: saved?._o?.tsVersion ?? 'latest',
   });
 
-  const iconsEnabled = ref(saved?._o?.iconsEnabled ?? false);
-
-  const builtinImportMap = computed<ImportMap>(() => genImportMap(versions, iconsEnabled.value));
+  const builtinImportMap = computed<ImportMap>(() => genImportMap(versions));
 
   const store = useReplStore(toRefs(
     reactive({
@@ -67,13 +65,12 @@ export function useStore(initial: Initial) {
   }
 
   watch(
-    [() => versions.antdvNext, iconsEnabled],
-    ([version, enabled]) => {
-      store.files[ANTDV_FILE].code = generateAntDesignVueCode(version, enabled).trim();
+    () => versions.antdvNext,
+    (version) => {
+      store.files[ANTDV_FILE].code = generateAntDesignVueCode(version).trim();
       compileFile(store, store.files[ANTDV_FILE]).then(
         errs => (store.errors = errs),
       );
-      userOptions.iconsEnabled = enabled;
     },
   );
 
@@ -90,17 +87,11 @@ export function useStore(initial: Initial) {
     { deep: true },
   );
 
-  function setIconsEnabled(enabled: boolean) {
-    iconsEnabled.value = enabled;
-  }
-
   const utils = {
     versions,
-    iconsEnabled,
     serialize,
     init,
     setVersion,
-    setIconsEnabled,
   };
   Object.assign(store, utils);
 

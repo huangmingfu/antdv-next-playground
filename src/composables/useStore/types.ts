@@ -12,5 +12,4 @@ export interface UserOptions {
   vueVersion?: string;
   tsVersion?: string;
   antdvVersion?: string;
-  iconsEnabled?: boolean;
 }

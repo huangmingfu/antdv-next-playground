@@ -4,7 +4,7 @@ import type { ComputedRef } from 'vue';
 import type { Store } from '@/composables';
 import type { VersionKey } from '@/utils/dependency';
 import { CodeOutlined, GithubFilled, ReloadOutlined, SettingOutlined, ShareAltOutlined } from '@antdv-next/icons';
-import { computed, reactive, unref } from 'vue';
+import { reactive } from 'vue';
 import { cdn, getSupportedAntdVersions, getSupportedTSVersions, getSupportedVueVersions } from '@/utils/dependency';
 import { autoLabelOptions, copy } from '@/utils/tools';
 
@@ -17,11 +17,6 @@ const emit = defineEmits<{
   (e: 'refresh'): void;
   (e: 'toggleConsole'): void;
 }>();
-
-const iconsEnabled = computed({
-  get: () => store.iconsEnabled,
-  set: val => store.setIconsEnabled(unref(val)),
-});
 
 const cdnOptions = [
   {
@@ -145,9 +140,6 @@ function toggleConsole() {
             <a-form>
               <a-form-item label="CDN">
                 <a-select v-model:value="cdn" :options="cdnOptions" style="width: 200px" />
-              </a-form-item>
-              <a-form-item label="@antdv-next/icons" tooltip="由于图标库包含大量文件，全量加载会影响性能，建议仅在需要使用图标时开启。">
-                <a-switch v-model:checked="iconsEnabled" checked-children="开" un-checked-children="关" />
               </a-form-item>
             </a-form>
           </template>

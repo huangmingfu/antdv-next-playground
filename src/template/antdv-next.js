@@ -1,6 +1,6 @@
 import Antd from 'antdv-next';
 import { getCurrentInstance } from 'vue';
-/* #ICONS_IMPORT# */
+import * as AntDNextIcons from "@antdv-next/icons";
 
 let installed = false;
 
@@ -13,7 +13,9 @@ export function setupAntDesignVue() {
   const app = instance.appContext.app;
 
   app.use(Antd);
-  /* #ICONS_REGISTER# */
+  Object.entries(AntDNextIcons).forEach(([name, comp]) => {
+    app.component(name, comp);
+  });
   installed = true;
 }
 

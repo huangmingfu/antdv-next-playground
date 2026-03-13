@@ -48,7 +48,7 @@ export function genCompilerSfcLink(version: string) {
   );
 }
 
-export function genImportMap(versions: Versions, iconsEnabled: boolean): ImportMap {
+export function genImportMap(versions: Versions): ImportMap {
   const deps: Record<string, Dependency> = {
     'vue': {
       pkg: '@vue/runtime-dom',
@@ -65,15 +65,12 @@ export function genImportMap(versions: Versions, iconsEnabled: boolean): ImportM
       version: versions.antdvNext,
       path: '/dist/antd.esm.js',
     },
-  };
-
-  if (iconsEnabled) {
-    deps['@antdv-next/icons'] = {
+    '@antdv-next/icons': {
       pkg: '@antdv-next/icons',
       version: 'latest',
       path: '/dist/antd-icons.esm.js',
-    };
-  }
+    },
+  };
 
   return {
     imports: Object.fromEntries(
